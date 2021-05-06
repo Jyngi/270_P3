@@ -7,6 +7,8 @@ const WIDTH = 992
 const HEIGHT = 992
 var GRIDSIZE = Vector2.ZERO
 
+var playerOBJ = null
+
 
 func _ready():
 	GRIDSIZE = Vector2(WIDTH/32,HEIGHT/32)
@@ -21,6 +23,11 @@ func _ready():
 			else:
 				temp.modulate = Color(0.05,0.05,0.05)
 			add_child(temp)
+			
+	playerOBJ = PLAYERNODE.instance()
+	playerOBJ.position = Vector2(9,9)*32
+	add_child(playerOBJ)
+	
 	pass # Replace with function body.
 
 func _process(delta):
