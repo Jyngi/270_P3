@@ -2,12 +2,14 @@ extends Node2D
 
 const TILENODE = preload("res://Scene/TILE.tscn")
 const PLAYERNODE = preload("res://Scene/player.tscn")
+const TILEHIGHLIGHT = preload("res://Scene/TILEHIGHLIGHT.tscn")
 # WIDTH AND HEIGHT != SCREEN WIDTH/HEIGHT 
-const WIDTH = 992
-const HEIGHT = 992
+const WIDTH = 480
+const HEIGHT = 480
 var GRIDSIZE = Vector2.ZERO
 
 var playerOBJ = null
+var highlightOBJ = null
 
 
 func _ready():
@@ -27,8 +29,12 @@ func _ready():
 	playerOBJ = PLAYERNODE.instance()
 	playerOBJ.position = Vector2(9,9)*32
 	add_child(playerOBJ)
+	highlightOBJ = TILEHIGHLIGHT.instance()
+	highlightOBJ.position = Vector2(0,0)
+	add_child(highlightOBJ)
 	
 	pass # Replace with function body.
 
 func _process(delta):
+	highlightOBJ.setXY(playerOBJ.position)
 	pass

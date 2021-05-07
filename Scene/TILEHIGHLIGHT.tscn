@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/32xSquareW.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/TILEHIGHLIGHT.gd" type="Script" id=2]
+
+[node name="TILEHIGHLIGHT" type="Sprite"]
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
