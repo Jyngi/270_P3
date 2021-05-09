@@ -4,6 +4,9 @@ var playerXY = Vector2.ZERO
 var coordinateExtremes = [Vector2.ZERO,Vector2.ZERO,Vector2.ZERO,Vector2.ZERO]
 var coordinatePlayer = [Vector2.ZERO,Vector2.ZERO,Vector2.ZERO,Vector2.ZERO]
 var dist = 0
+var direction = null
+
+
 func _process(delta):
 #	UpdateExtremes()
 	FindQuadrant()
@@ -22,12 +25,14 @@ func FindQuadrant():
 		dist = sqrt(pow((mousePos.x-playerXY.x),2) + pow((mousePos.y - playerXY.y),2))
 		if tempSlope < 1 and tempSlope > -1:
 			if mousePos.x < playerXY.x:
+				direction = "left"
 				if dist < 16 + 32*3:
 					position.x = floor(mousePos.x/32) * 32
 				else:
 					position.x = playerXY.x - 16 - 32 * 3
 				position.y = playerXY.y-16
 			else:
+				direction = "right"
 				if dist < 16 + 32*3:
 					position.x = floor(mousePos.x/32) * 32
 				else:
@@ -35,6 +40,7 @@ func FindQuadrant():
 				position.y = playerXY.y - 16
 		else:
 			if mousePos.y < playerXY.y:
+				direction = "up"
 				if dist < 16 + 32 * 3:
 					position.y = floor(mousePos.y/32) * 32
 				else:
@@ -42,8 +48,11 @@ func FindQuadrant():
 				position.x = playerXY.x-16
 				
 			else:
+				direction = "down"
 				if dist < 16 + 32 * 3:
 					position.y = floor(mousePos.y/32) * 32
 				else:
 					position.y = playerXY.y + 16 + 32 *2
 				position.x = playerXY.x - 16
+func ReturnDirection():
+	return direction
