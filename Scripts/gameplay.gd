@@ -33,13 +33,13 @@ func _ready():
 			var temp = TILENODE.instance()
 			temp.position = Vector2(a,b) * 32
 			if counter % 2 == 0:
-				temp.modulate = Color(0.1,0.1,0.1)
+				temp.modulate = Color(1,1,1,.05)
 			else:
-				temp.modulate = Color(0.05,0.05,0.05)
+				temp.modulate = Color(0.05,0.05,0.05,0)
 			add_child(temp)
 	highlightOBJ = TILEHIGHLIGHT.instance()
 	highlightOBJ.position = Vector2(0,0)
-	highlightOBJ.modulate = Color(1,1,1,.5)
+	highlightOBJ.modulate = Color(0,1,0,.5)
 	add_child(highlightOBJ)			
 	rangeOBJ = MOVEMENTRANGE.instance()
 	rangeOBJ.position = Vector2(9,9) *32
