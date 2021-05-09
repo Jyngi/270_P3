@@ -11,6 +11,7 @@ var GRIDSIZE = Vector2.ZERO
 var playerOBJ = null
 var highlightOBJ = null
 
+var movementTimer = 1.00
 
 func _ready():
 	GRIDSIZE = Vector2(WIDTH/32,HEIGHT/32)
@@ -25,16 +26,22 @@ func _ready():
 			else:
 				temp.modulate = Color(0.05,0.05,0.05)
 			add_child(temp)
-			
+	highlightOBJ = TILEHIGHLIGHT.instance()
+	highlightOBJ.position = Vector2(0,0)
+	add_child(highlightOBJ)			
 	playerOBJ = PLAYERNODE.instance()
 	playerOBJ.position = Vector2(9,9)*32
 	add_child(playerOBJ)
-	highlightOBJ = TILEHIGHLIGHT.instance()
-	highlightOBJ.position = Vector2(0,0)
-	add_child(highlightOBJ)
 	
-	pass # Replace with function body.
-
 func _process(delta):
 	highlightOBJ.setXY(playerOBJ.position)
-	pass
+	updateTimer(delta)
+	
+func _input(event):
+	if Input.is_action_just_pressed("ui_select") == true and movementTimer > 1.00:
+		movementTimer = 0
+		playerOBJ.Teleport(highlightOBJ.position)
+		
+func updateTimer(delta):
+	movementTimer += delta
+

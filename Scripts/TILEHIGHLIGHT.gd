@@ -3,6 +3,7 @@ var mousePos
 var playerXY = Vector2.ZERO
 var coordinateExtremes = [Vector2.ZERO,Vector2.ZERO,Vector2.ZERO,Vector2.ZERO]
 var coordinatePlayer = [Vector2.ZERO,Vector2.ZERO,Vector2.ZERO,Vector2.ZERO]
+var dist = 0
 func _process(delta):
 #	UpdateExtremes()
 	FindQuadrant()
@@ -13,26 +14,36 @@ func _input(event):
 		mousePos = event.position
 		
 func setXY(XYPos):
-	playerXY = XYPos
-#func UpdateExtremes():
-#	if playerXY:
-#		for i in range(2):
-#			coordinatePlayer[i] = Vector2(playerXY.x + (32 * i),playerXY.y)
-#		for i in range(2):
-#			coordinatePlayer[i+2] = Vector2(playerXY.x + (32* i),playerXY.y+32)
+	playerXY = Vector2(XYPos.x+16,XYPos.y+16)
 #
 func FindQuadrant():
 	if mousePos:
 		var tempSlope = (playerXY.y - mousePos.y)/((playerXY.x+0.001) - mousePos.x)
-		var dist = sqrt(pow((mousePos.x-playerXY.x),2) + pow((mousePos.y - playerXY.y),2))
-		print(dist)
+		dist = sqrt(pow((mousePos.x-playerXY.x),2) + pow((mousePos.y - playerXY.y),2))
 		if tempSlope < 1 and tempSlope > -1:
 			if mousePos.x < playerXY.x:
-				print("left")
+				if dist < 16 + 32*3:
+					position.x = floor(mousePos.x/32) * 32
+				else:
+					position.x = playerXY.x - 16 - 32 * 3
+				position.y = playerXY.y-16
 			else:
-				print("right")
+				if dist < 16 + 32*3:
+					position.x = floor(mousePos.x/32) * 32
+				else:
+					position.x = playerXY.x + 16 + 32 * 2
+				position.y = playerXY.y - 16
 		else:
 			if mousePos.y < playerXY.y:
-				print("top")
+				if dist < 16 + 32 * 3:
+					position.y = floor(mousePos.y/32) * 32
+				else:
+					position.y = playerXY.y - 16 - 32 * 3
+				position.x = playerXY.x-16
+				
 			else:
-				print("bot")
+				if dist < 16 + 32 * 3:
+					position.y = floor(mousePos.y/32) * 32
+				else:
+					position.y = playerXY.y + 16 + 32 *2
+				position.x = playerXY.x - 16
