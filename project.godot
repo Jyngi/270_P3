@@ -14,6 +14,10 @@ config/name="270 P 3"
 run/main_scene="res://Scene/gameplay.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
 [display]
 
 window/size/width=480
