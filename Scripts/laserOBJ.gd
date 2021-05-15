@@ -16,7 +16,7 @@ var directionalArr = [-1,1]
 var st3R1 = false
 var st2R1 = false
 # if true vert, if false horizon
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	laserStartPos = floor(rand_range(0,480)/32)
 	vert = randi()%2
@@ -36,6 +36,7 @@ func _ready():
 	add_child(warnLines)
 	
 	laserStateArray[0] = true
+	
 func _process(delta):
 	if laserStateArray[0] == true:
 		Stage2()
@@ -53,6 +54,7 @@ func Stage2():
 		st2R1 = true
 		remove_child(warnLines)
 		laserStateArray[1] = true
+		
 func Stage3():
 	if st3R1 == false:
 		st3R1 = true
@@ -65,13 +67,11 @@ func Stage3():
 	if laserBody.ReturnState() == true:
 		remove_child(laserBody)
 		laserStateArray[2] = true
+		
 func Stage4():
 	destroy = true
 	pass
+	
 func ReturnState():
 	return destroy
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

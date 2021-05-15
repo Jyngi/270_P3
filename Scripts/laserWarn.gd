@@ -1,14 +1,9 @@
 extends Sprite
 
-
 var timer = 0
 var counter = 0
 var destroy = false
 
-
-func _ready():
-	pass
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	counter +=1
 	timer += delta

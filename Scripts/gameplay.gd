@@ -22,11 +22,30 @@ var VFXTimer = 0.00
 var VFXArr = []
 var VFXIndex = -1
 var movement = false
+var shake = false
 
 var movementTimer = 1.00
 var effectTimer = 0.00
 
+var TELEPORTSFX
+var CHARGESFX
+var CHARGE2SFX
+
 func _ready():
+	TELEPORTSFX = AudioStreamPlayer.new()
+	CHARGESFX = AudioStreamPlayer.new()
+	CHARGE2SFX = AudioStreamPlayer.new()
+	self.add_child(TELEPORTSFX)
+	self.add_child(CHARGESFX)
+	self.add_child(CHARGE2SFX)
+	TELEPORTSFX.stream = load("res://Audio/teleport.wav")
+	CHARGESFX.stream = load("res://Audio/charging.wav")
+	CHARGE2SFX.stream = load("res://Audio/still charging.wav")
+	CHARGESFX.set_pitch_scale(2.0)
+	TELEPORTSFX.set_volume_db(-20)
+	CHARGESFX.set_volume_db(-20)
+	CHARGE2SFX.set_volume_db(-20)
+	
 	randomize()
 	GRIDSIZE = Vector2(WIDTH/32,HEIGHT/32)
 	var counter = 0
@@ -53,6 +72,7 @@ func _ready():
 	add_child(playerOBJ)
 	laserCONT = LASERCONTROLLER.instance()
 	add_child(laserCONT)
+	
 	for i in range(2):
 		fadeArray.append(PLAYERFADE.instance())
 	for i in range(len(fadeArray)):
@@ -61,7 +81,7 @@ func _ready():
 		add_child(fadeArray[i])
 	
 func _process(delta):
-	Global.playerPos = playerOBJ.position
+	CheckStock()
 	highlightOBJ.setXY(playerOBJ.position)
 	updateTimer(delta)
 	if VFXArr:
@@ -75,16 +95,25 @@ func _process(delta):
 		
 	if movement == true and effectTimer >= .9166:
 		movementTimer = 0
+		TELEPORTSFX.play()
 		playerOBJ.Teleport(VFXArr[VFXIndex].position)
+		shake = true
 		rangeOBJ.position = playerOBJ.position
 		fadeArray[0].position = playerOBJ.position
 		movement = false
 		effectTimer = 0.00
+	if movementTimer > .5:
+		shake = false
+	CameraShake()
 	
 func _input(event):
-	if Input.is_action_just_pressed("ui_select") == true and movementTimer > .5 and movement != true:
-		SpawnVFX()
-		movement = true
+	if Input.is_action_just_pressed("ui_select") == true: 
+		if movementTimer > .5 and movement != true:
+			CHARGESFX.play()
+			SpawnVFX()
+			movement = true
+		else:
+			CHARGE2SFX.play()
 		
 func updateTimer(delta):
 	if movement == true:
@@ -109,7 +138,18 @@ func SpawnVFX():
 	add_child(VFXArr[VFXIndex])
 	VFXArr[VFXIndex].play()
 		
+func CheckStock():
+	if Global.stock <= 0:
+		get_tree().change_scene("res://GameOver.tscn")
+func CameraShake():
+	if shake == true:
+		Global.cameraPosition.x += rand_range(-2,2)
+		Global.cameraPosition.y += rand_range(-2,2)
+		Global.cameraPosition.x += rand_range(-2,2)
+		Global.cameraPosition.y += rand_range(-2,2)
 
+	else:
+		Global.cameraPosition = Vector2.ZERO
 	
 
 

@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="270 P 3"
-run/main_scene="res://Scene/gameplay.tscn"
+run/main_scene="res://TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]

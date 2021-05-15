@@ -6,11 +6,8 @@ var coordinatePlayer = [Vector2.ZERO,Vector2.ZERO,Vector2.ZERO,Vector2.ZERO]
 var dist = 0
 var direction = null
 
-
 func _process(delta):
-#	UpdateExtremes()
 	FindQuadrant()
-	pass
 	
 func _input(event):
 	if  event is InputEventMouseMotion:
@@ -54,5 +51,6 @@ func FindQuadrant():
 				else:
 					position.y = playerXY.y + 16 + 32 *2
 				position.x = playerXY.x - 16
+				
 func ReturnDirection():
 	return direction

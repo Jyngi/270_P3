@@ -7,15 +7,9 @@ var laserIndex = -1
 var levelArr = [1,2,3,4,5,6,7]
 var timer = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	timer += 1
-	if timer > 15:
+	if timer > 30:
 		timer = 0
 		laserIndex += 1
 		laserOBJArr.append(LASER_OBJECT.instance())
