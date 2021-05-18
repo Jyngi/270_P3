@@ -12,6 +12,8 @@ config_version=4
 
 config/name="270 P 3"
 run/main_scene="res://TitleScreen.tscn"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]
@@ -22,6 +24,8 @@ Global="*res://Scripts/Global.gd"
 
 window/size/width=480
 window/size/height=480
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [input]
 
